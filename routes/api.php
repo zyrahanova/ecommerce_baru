@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\MidtransController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RajaOngkirController;
+use App\Http\Controllers\User\MidtransController as UserMidtransController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +27,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('categories', CategoryController::class);
 // Api Products
 Route::resource('products', ProductController::class);
+Route::post('/callback', [UserMidtransController::class, 'callback']);
 
-Route::post('midtrans/callback', [MidtransController::class, 'callback']);
 
 Route::get('provinces', [RajaOngkirController::class, 'provinces']);
 Route::get('cities/{provinceId}', [RajaOngkirController::class, 'cities']);

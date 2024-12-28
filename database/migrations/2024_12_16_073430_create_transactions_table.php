@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('order_id');
             $table->string('customer_name')->nullable();
             $table->integer('gross_amount')->nullable();
-            $table->enum('payment_type', ['credit_card', 'bank_transfer', 'qris', 'cstore', 'echannel'])->nullable();
-            $table->string('payment_method')->nullable();
             $table->enum('courier', ['jne', 'tiki', 'pos'])->nullable();
             $table->string('courier_service')->nullable();
             $table->string('transaction_status')->nullable();
             $table->datetime('transaction_time')->nullable();
+            $table->string('transaction_id')->nullable();
+            $table->string('snap_token')->nullable();
             $table->timestamps();
         });
     }

@@ -83,15 +83,9 @@ class ProductController extends DashboardController
 
             $product->save();
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Product created successfully',
-            ])->setStatusCode(Response::HTTP_CREATED);
-        } catch (\throwable $th) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Failed to create product',
-            ])->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan.');
+        } catch (\Throwable $th) {
+            return redirect()->route('products.index')->with('error', 'Gagal menambahkan produk.');
         }
     }
 
@@ -103,15 +97,37 @@ class ProductController extends DashboardController
         try {
             $product->delete();
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Product deleted successfully',
-            ])->setStatusCode(Response::HTTP_OK);
+            return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus.');
         } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Failed to delete product',
-            ])->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            return redirect()->route('products.index')->with('error', 'Gagal menghapus produk.');
         }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $product->name = $validated['name'];
+        $product->description = $validated['description'];
+        $product->price = $validated['price'];
+        $product->category_id = $validated['category_id'];
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('uploads', 'public');
+            $product->image = $imagePath;
+        }
+
+        $product->save();
+
+        return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui');
     }
 }

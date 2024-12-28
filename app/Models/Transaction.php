@@ -13,11 +13,9 @@ class Transaction extends Model
         'order_id',
         'customer_name',
         'gross_amount',
-        'payment_type',
-        'payment_method',
         'courier',
-        'courier_service',
         'transaction_status',
-        'transaction_time'
+        'transaction_time',
+        'snap_token'
     ];
 }

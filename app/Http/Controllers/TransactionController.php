@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -11,8 +12,14 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return view('pages.transaksi');
+        $transactions = Transaction::all();
+        $totalRevenue = $transactions->where('transaction_status', 'success')->sum('gross_amount');
+        $successfulTransactions = $transactions->where('transaction_status', 'success')->count();
+        $pendingTransactions = $transactions->where('transaction_status', '!=', 'success')->count();
+
+        return view('pages.transaksi', compact('transactions', 'totalRevenue', 'successfulTransactions', 'pendingTransactions'));
     }
+
 
     /**
      * Show the form for creating a new resource.
