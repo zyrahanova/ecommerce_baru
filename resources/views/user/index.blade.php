@@ -5,7 +5,7 @@
     <div id="event-list" class="container mx-auto p-4 mb-5">
         <!-- Check if there are products -->
         @if ($products->isEmpty())
-            <div class="flex flex-col items-center justify-center p-8 my-20">
+            <div class="flex flex-col items-center justify-center p-8 my-32">
                 <img src="https://via.placeholder.com/150" alt="No products" class="mb-4">
                 <h2 class="text-lg font-semibold text-gray-700">Oops, tidak ada Product.</h2>
             </div>
