@@ -58,7 +58,7 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        fetch('http://localhost:8000/api/provinces')
+        fetch('https://zyraproject.web.id/api/provinces')
             .then(response => response.json())
             .then(result => {
                 const provinces = result.rajaongkir.results;
@@ -73,7 +73,7 @@
 
         document.getElementById('province_destination').addEventListener('change', function () {
             const provinceId = this.value;
-            fetch(`http://localhost:8000/api/cities/${provinceId}`)
+            fetch(`https://zyraproject.web.id/api/cities/${provinceId}`)
                 .then(response => response.json())
                 .then(result => {
                     const cities = result.rajaongkir.results;
@@ -100,7 +100,7 @@
 
             document.getElementById('loader').classList.remove('hidden'); 
 
-            fetch('http://localhost:8000/api/cost', {
+            fetch('https://zyraproject.web.id/api/cost', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
